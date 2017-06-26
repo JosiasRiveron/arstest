@@ -1,0 +1,98 @@
+﻿@model ArsTest.Models.ars_Cotizacion
+@{
+    ViewBag.Title = "GetCotizacion";
+}
+
+<h2>Cotizacion</h2>
+
+
+
+<div class="container">
+    <form method="post" class="form-inline" onsubmit="" id="frmcotizacion">
+        <div class="row">
+            <div class="form-group">
+                <label for="cotizacion_id">Cotizacion id:</label>
+                <input type="text" class="form-control" readonly="readonly" name="cotizacion_id" value="@Model.cotizacion_id" id="cotizacion_id" />
+            </div>
+            <div class="form-group pull-right">
+                <label for="fecha_cotizacion">Fecha:</label>
+                <input type="text" class="form-control" readonly="readonly" name="fecha_cotizacion" value="@Model.fecha_cotizacion" id="fecha_cotizacion" />
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="form-group">
+                <label for="Nombre">Cliente</label>
+                <input type="text" class="form-control" readonly="readonly" name="Nombre" value="@Model.Nombre" id="Nombre" />
+              
+            </div>
+            <div class="form-group">
+                <label for="estimacion_cliente">Valor Estimacion:</label>
+                <input type="text" class="form-control" readonly="readonly" name="estimacion_cliente" value="@Model.estimacion_cliente" id="estimacion_cliente" />
+            </div>
+            <div class="form-group">
+
+
+                <label for="ramo">Ramos:</label>
+                <input type="text" class="form-control" readonly="readonly" name="Ramo" value="@Model.Ramo" id="ramo" />
+              
+
+            </div>
+            <div class="form-group">
+                <label for="plan">Planes:</label>
+                <input type="text" class="form-control" readonly="readonly" name="plan" value="@Model.plan" id="plan" />
+               
+            </div>
+            <div class="row">
+                <div class="table container">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Nombre Cobertura</th>
+                            <th>Monto Cobertura</th>
+                            <th>Monto Prima</th>
+
+                        </tr>
+                        @{
+                            if (ViewData["Cobertura"] != null)
+                            {
+                                Conexion.Resultados dato = (Conexion.Resultados)ViewData["Cobertura"];
+                                if (dato.dtResult.Rows.Count > 0)
+                                {
+                                    foreach (System.Data.DataRow r in dato.dtResult.Rows)
+                                    {
+                                        <tr>
+                                            <td>@r["descripcion"].ToString()</td>
+                                            <td>@((decimal.Parse(r["tasa_cobertura"].ToString()) * Model.estimacion_cliente) / 100)</td>
+                                            <td>@((decimal.Parse(r["prima"].ToString()) * Model.estimacion_cliente) / 100)</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group pull-right">
+                <label for="total_cotizacion">Total A Pagar:</label>
+                <input type="text" class="form-control" readonly="readonly" name="total_cotizacion" value="@Model.total_cotizacion" id="total_cotizacion" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group">
+
+             
+               
+                <a class="btn btn-info form-control" href="~/Cotizacion/Index">Nueva Cotizacion</a> 
+
+
+
+
+            </div>
+        </div>
+
+    </form>
+
+
+
+</div>
